@@ -9,8 +9,8 @@ BJMM=$(zenity --list --title="Base64 Codec" --width="440" --height="230" --text=
     if [ "${BJMM}" == "Base64 encoding" ]; then
 numa=1
 while [ "$numa" == "1" ]; do
-mfjd=$(zenity --text-info --title="Enter the node to be encoded" --editable --width="700" --height="240")
-if [ "$mfjd" == "" ]; then
+bmjd=$(zenity --text-info --title="Enter the node to be encoded" --editable --width="700" --height="240")
+if [ "$bmjd" == "" ]; then
 zenity --question --width="420" --height="150" --text="Nothing filled in, do you want to exit the script?" --ok-label="Exit script" --cancel-label ="Refill"
 if [ "$?" == "0" ]; then
 exit 1
@@ -19,11 +19,11 @@ continue
 fi
 fi
 #Determine whether the node is a vmess, vless, trojan node
-if [[ "`echo $mfjd |grep -E '^vmess|^trojan|^vless|^ss|^ssr'`" != "" ]] &>/dev/null ;then
+if [[ "`echo $bmjd |grep -E '^vmess|^trojan|^vless|^ss|^ssr'`" != "" ]] &>/dev/null ;then
 echo "The current input content meets the base64 encoding conditions, and then convert it for you!"
 sleep 2
 clear
-echo "$mfjd" |base64 > base64.txt
+echo "$bmjd" |base64 > base64.txt
           
 else
 #The input node does not meet the requirements and needs to be re-entered
@@ -41,13 +41,13 @@ exit 1
 fi
 done
 
-#------------------------------------------------- ---------------------------------------------------------
+
 
     if [ "${BJMM}" == "Base64 decoding" ]; then
 numa=1
 while [ "$numa" == "1" ]; do
-mfjd=$(zenity --text-info --title="Enter the base code that needs to be decoded" --editable --width="700" --height="240")
-if [ "$mfjd" == "" ]; then
+jmjd=$(zenity --text-info --title="Enter the base code that needs to be decoded" --editable --width="700" --height="240")
+if [ "$jmjd" == "" ]; then
 zenity --question --width="420" --height="150" --text="Nothing filled in, do you want to exit the script?" --ok-label="Exit script" --cancel-label ="Refill"
 if [ "$?" == "0" ]; then
 exit 1
@@ -56,12 +56,12 @@ continue
 fi
 fi
 #Determine whether it meets the base64 decoding requirements
-if [[ "`echo $mfjd |grep -E '[^[:punct:]]'`" ]] &>/dev/null ;then
+if [[ "`echo $jmjd |grep -E '[^[:punct:]]'`" ]] &>/dev/null ;then
 echo "The current input content meets the base64 encoding conditions, and then convert it for you!"
 sleep 2
 clear
 #bash64-bit encoding conversion and delete duplicate links
-echo "$mfjd" |base64 -d > jd
+echo "$jmjd" |base64 -d > jd
 sort -u jd -o node link.txt
 rm jd -r
 else

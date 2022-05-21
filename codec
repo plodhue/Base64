@@ -1,0 +1,87 @@
+#!/bin/bash
+
+BJMM=$(zenity --list --title="Base64 Codec" --width="440" --height="230" --text="There are 2 formats for encoding and decoding: Base64 encoding and Base64 decoding\ n" --column="" --ok-label="true" --cancel-label="exit" "Base64 encoding"\
+      "Base64 decoding")
+    if [ "${BJMM}" == "" ]; then
+        zenity --info --title="Tips" --width="350" --height="150" --text="If no Base64 codec is selected, it will automatically exit the encoding program" --ok-label= "quit"
+    fi
+    
+    if [ "${BJMM}" == "Base64 encoding" ]; then
+numa=1
+while [ "$numa" == "1" ]; do
+mfjd=$(zenity --text-info --title="Enter the node to be encoded" --editable --width="700" --height="240")
+if [ "$mfjd" == "" ]; then
+zenity --question --width="420" --height="150" --text="Nothing filled in, do you want to exit the script?" --ok-label="Exit script" --cancel-label ="Refill"
+if [ "$?" == "0" ]; then
+exit 1
+else
+continue
+fi
+fi
+#Determine whether the node is a vmess, vless, trojan node
+if [[ "`echo $mfjd |grep -E '^vmess|^trojan|^vless|^ss|^ssr'`" != "" ]] &>/dev/null ;then
+echo "The current input content meets the base64 encoding conditions, and then convert it for you!"
+sleep 2
+clear
+echo "$mfjd" |base64 > base64.txt
+          
+else
+#The input node does not meet the requirements and needs to be re-entered
+zenity --question --width="420" --height="150" --text="The currently input node does not meet any of the node requirements" --ok-label="Exit script" --cancel-label ="Refill"
+if [ "$?" == "0" ]; then
+exit 1
+else
+continue
+fi
+fi
+
+zenity --question --width="300" --height="150" --text="The node has been converted, please choose whether to continue converting the node?" --ok-label="Continue" --cancel-label ="exit"
+if [ "$?" == "1" ] ;then
+exit 1
+fi
+done
+
+#------------------------------------------------- ---------------------------------------------------------
+
+    if [ "${BJMM}" == "Base64 decoding" ]; then
+numa=1
+while [ "$numa" == "1" ]; do
+mfjd=$(zenity --text-info --title="Enter the base code that needs to be decoded" --editable --width="700" --height="240")
+if [ "$mfjd" == "" ]; then
+zenity --question --width="420" --height="150" --text="Nothing filled in, do you want to exit the script?" --ok-label="Exit script" --cancel-label ="Refill"
+if [ "$?" == "0" ]; then
+exit 1
+else
+continue
+fi
+fi
+#Determine whether it meets the base64 decoding requirements
+if [[ "`echo $mfjd |grep -E '[^[:punct:]]'`" ]] &>/dev/null ;then
+echo "The current input content meets the base64 encoding conditions, and then convert it for you!"
+sleep 2
+clear
+#bash64-bit encoding conversion and delete duplicate links
+echo "$mfjd" |base64 -d > jd
+sort -u jd -o node link.txt
+rm jd -r
+else
+#The input node does not meet the requirements and needs to be re-entered
+zenity --question --width="420" --height="150" --text="The currently input node does not meet any of the node requirements" --ok-label="Exit script" --cancel-label ="Refill"
+if [ "$?" == "0" ]; then
+exit 1
+else
+continue
+fi
+
+fi
+
+zenity --question --width="420" --height="150" --text="The node has been decoded, please choose whether to continue decoding?" --ok-label="Continue" --cancel-label= "quit"
+if [ "$?" == "1" ] ;then
+exit 1
+fi
+done
+    fi
+               
+    fi
+sleep 1
+clear
